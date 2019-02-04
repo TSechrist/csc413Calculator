@@ -1,10 +1,10 @@
 # CSC 413 - Project One
 
-## Student Name  : Name here
+## Student Name  : Thomas Sechrist
 
-## Student ID    : ID here
+## Student ID    : 918679091
 
-## Student Email : Email here
+## Student Email : tsechrist@mail.ccsf.edu
 
 ### Note failure to completely fill out this README.md could cause you to recieve a  0 for your project until correctly done
 

@@ -4,7 +4,7 @@
 
 ## Student ID    : 918679091
 
-## Student Email : tsechrist@mail.ccsf.edu
+## Student Email : tsechrist@mail.sfsu.edu
 
 ### Note failure to completely fill out this README.md could cause you to recieve a  0 for your project until correctly done
 

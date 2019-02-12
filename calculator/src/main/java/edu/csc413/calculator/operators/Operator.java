@@ -23,13 +23,10 @@ public abstract class Operator {
 
     static{
         operators.put("+", new AddOperator());
-        /*
         operators.put("-", new SubtractOperator());
         operators.put("*", new MultiplyOperator());
         operators.put("/", new DivideOperator());
         operators.put("^", new PowerOperator());
-
-         */
     }
 
 
@@ -44,9 +41,16 @@ public abstract class Operator {
      * Think about what happens if we add more operators.
      */
     public static boolean check( String token ) {
+
+        if (token == "+" || token == "-" || token == "*" || token == "/" || token == "^")
+        {
+            return true;
+        }
         return false;
     }
 
 
-    public static Operator getOperator(String token){return null;}
+    public static Operator getOperator(String token){
+        return operators.get(token);
+    }
 }

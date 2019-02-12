@@ -18,7 +18,21 @@ public abstract class Operator {
     // operators.put( "+", new AdditionOperator() );
     // operators.put( "-", new SubtractionOperator() );
     
-    
+
+    static HashMap<String, Operator> operators = new HashMap<>();
+
+    static{
+        operators.put("+", new AddOperator());
+        /*
+        operators.put("-", new SubtractOperator());
+        operators.put("*", new MultiplyOperator());
+        operators.put("/", new DivideOperator());
+        operators.put("^", new PowerOperator());
+
+         */
+    }
+
+
     public abstract int priority();
     public abstract Operand execute(Operand op1, Operand op2 );
 

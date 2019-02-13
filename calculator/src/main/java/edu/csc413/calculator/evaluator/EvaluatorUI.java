@@ -9,12 +9,13 @@ public class EvaluatorUI extends JFrame implements ActionListener {
 
     private TextField txField = new TextField();
     private Panel buttonPanel = new Panel();
+    private Boolean clearScreen = false;
 
     // total of 20 buttons on the calculator,
     // numbered from left to right, top to bottom
     // bText[] array contains the text for corresponding buttons
     private static final String[] bText = {
-        "7", "8", "9", "+", "4", "5", "6", "- ", "1", "2", "3",
+        "7", "8", "9", "+", "4", "5", "6", "-", "1", "2", "3",
         "*", "0", "^", "=", "/", "(", ")", "C", "CE"
     };
 
@@ -66,5 +67,36 @@ public class EvaluatorUI extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent arg0) {
         // You need to fill in this fuction
+
+//        System.out.println(arg0.getActionCommand());
+
+        if (clearScreen)
+        {
+            txField.setText("");
+            clearScreen = false;
+        }
+
+        if(arg0.getActionCommand() == "C")
+        {
+            txField.setText("");
+        }
+        else if (arg0.getActionCommand() == "CE")
+        {
+            if (txField.getText().length() > 0)
+            {
+                txField.setText(txField.getText().substring(0, txField.getText().length() - 1));
+            }
+        }
+        else if(arg0.getActionCommand() == "=")
+        {
+            Evaluator calc = new Evaluator();
+            txField.setText(String.valueOf(calc.eval(txField.getText())));
+            clearScreen = true;
+        }
+        else
+        {
+            txField.setText(txField.getText() + arg0.getActionCommand());
+        }
+
     }
 }

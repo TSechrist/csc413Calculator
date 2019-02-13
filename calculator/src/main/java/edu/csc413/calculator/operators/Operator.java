@@ -44,13 +44,22 @@ public abstract class Operator {
      */
     public static boolean check( String token ) {
 
-        if (token.equals("+") || token.equals("-") || token.equals("*") ||
-                token.equals("/") || token.equals("^") || token.equals("(") ||
-                token.equals(")"))
+        //First attempt and it works but I don't want operator to rely on methods from operand
+//        return (!Operand.check(token));
+
+        //I hate using this try/catch block to test if the token
+        //is valid but it is the easiest way I could think of.
+        //Found this on stackoverflow
+        try
+        {
+            int validInt = Integer.parseInt(token);
+            return false;
+        }
+        catch (NumberFormatException e)
         {
             return true;
         }
-        return false;
+
     }
 
 

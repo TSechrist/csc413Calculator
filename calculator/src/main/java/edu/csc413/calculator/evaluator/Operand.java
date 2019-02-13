@@ -1,5 +1,5 @@
 package edu.csc413.calculator.evaluator;
-import java.util.Stack;
+import java.util.Vector;
 
 /**
  * Operand class used to represent an operand
@@ -8,14 +8,14 @@ import java.util.Stack;
 
 public class Operand {
 
-  Stack<Integer> stateStack = new Stack<>();
+    Vector<Integer> vState = new Vector<>();
 
   /**
   * construct operand from string token.
   */  
   public Operand( String token ) {
 
-      stateStack.push(Integer.parseInt(token));
+        vState.add(Integer.parseInt(token));
 
   }
 
@@ -24,8 +24,7 @@ public class Operand {
    */
   public Operand( int value ) {
 
-      stateStack.push(value);
-
+        vState.add(value);
   }
 
   /**
@@ -33,12 +32,12 @@ public class Operand {
    */
   public int getValue() {
 
-      if (stateStack.peek() != null)
-      {
-        return stateStack.pop();
-      }
+        if (vState.firstElement() != null)
+        {
+            return vState.firstElement();
+        }
 
-    return 0;
+         return 0;
   }
 
   /**

@@ -35,7 +35,6 @@ public class Evaluator {
     while ( this.tokenizer.hasMoreTokens() ) {
       // filter out spaces
       if ( !( token = this.tokenizer.nextToken() ).equals( " " )) {
-        System.out.println(token);
         // check if token is an operand
         if ( Operand.check( token )) {
 //          System.out.println(token + " passed operand check");

@@ -1,5 +1,4 @@
 package edu.csc413.calculator.evaluator;
-import java.util.Vector;
 
 /**
  * Operand class used to represent an operand
@@ -8,14 +7,17 @@ import java.util.Vector;
 
 public class Operand {
 
-    Vector<Integer> vState = new Vector<>();
+    //I started off using a vector for the datafield but
+    //I noticed that a regular int does the job fine.
+
+    int state = 0;
 
   /**
   * construct operand from string token.
   */  
   public Operand( String token ) {
 
-        vState.add(Integer.parseInt(token));
+        state = Integer.parseInt(token);
 
   }
 
@@ -24,7 +26,8 @@ public class Operand {
    */
   public Operand( int value ) {
 
-        vState.add(value);
+        state = value;
+
   }
 
   /**
@@ -32,12 +35,8 @@ public class Operand {
    */
   public int getValue() {
 
-        if (vState.firstElement() != null)
-        {
-            return vState.firstElement();
-        }
+      return state;
 
-         return 0;
   }
 
   /**

@@ -36,7 +36,7 @@ public class Evaluator {
       // filter out spaces
       if ( !( token = this.tokenizer.nextToken() ).equals( " " )) {
         // check if token is an operand
-        System.out.println(token);
+//        System.out.println(token);
         if ( Operand.check( token )) {
 //          System.out.println(token + " passed operand check");
           operandStack.push( new Operand( token ));
@@ -51,8 +51,8 @@ public class Evaluator {
             {
               while ( !operatorStack.peek().equals(Operator.getOperator("(")) )
               {
-                Operand o2 = operandStack.pop();
-                operandStack.push(operatorStack.pop().execute(operandStack.pop(), o2));
+                Operand temp = operandStack.pop();
+                operandStack.push(operatorStack.pop().execute(operandStack.pop(), temp));
               }
               operatorStack.pop();
             }
@@ -100,16 +100,16 @@ public class Evaluator {
     // Suggestion: create a method that takes an operator as argument and
     // then executes the while loop.
 
-    Operand o2;
+    Operand temp;
 
     //Continue working the until both stacks are empty
     while( !operatorStack.isEmpty() && !operandStack.isEmpty())
     {
 
       //Updating total with the executed operator/operands
-      //Needed the extra o2 object to temp store for reading right to left
-        o2 = operandStack.pop();
-        operandStack.push(operatorStack.pop().execute(operandStack.pop(), o2));
+      //Needed the extra temp object to temp store for reading right to left
+        temp = operandStack.pop();
+        operandStack.push(operatorStack.pop().execute(operandStack.pop(), temp));
 
     }
 

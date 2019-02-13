@@ -35,11 +35,15 @@ public class Evaluator {
     while ( this.tokenizer.hasMoreTokens() ) {
       // filter out spaces
       if ( !( token = this.tokenizer.nextToken() ).equals( " " )) {
+        System.out.println(token);
         // check if token is an operand
         if ( Operand.check( token )) {
+//          System.out.println(token + " passed operand check");
           operandStack.push( new Operand( token ));
         } else {
+//          System.out.println(token + " Failed operand check");
           if ( ! Operator.check( token )) {
+//            System.out.println(token + " Failed operator check");
             System.out.println( "*****invalid token******" );
             throw new RuntimeException("*****invalid token******");
           }
@@ -53,8 +57,8 @@ public class Evaluator {
           //Operator newOperator = new Operator();
 
           Operator newOperator =  Operator.getOperator(token);
-          
-          while (operatorStack.peek().priority() >= newOperator.priority() ) {
+
+          while ( !operatorStack.isEmpty() && operatorStack.peek().priority() >= newOperator.priority() ) {
             // note that when we eval the expression 1 - 2 we will
             // push the 1 then the 2 and then do the subtraction operation
             // This means that the first number to be popped is the
@@ -64,7 +68,6 @@ public class Evaluator {
             Operand op1 = operandStack.pop();
             operandStack.push( oldOpr.execute( op1, op2 ));
           }
-
           operatorStack.push( newOperator );
         }
       }
@@ -81,7 +84,24 @@ public class Evaluator {
     // evaluating the operator stack until it only contains the init operator;
     // Suggestion: create a method that takes an operator as argument and
     // then executes the while loop.
-    
-    return 0;
+
+    Operand o1;
+    Operand o2;
+    Operand total = new Operand(0);
+//    Operator optr = new Operator();   Can't init this here, template
+
+    while( !operatorStack.isEmpty() && !operandStack.isEmpty())
+    {
+        o2 = operandStack.pop();
+        o1 = operandStack.pop();
+        Operator optr = operatorStack.pop();
+
+        total = optr.execute(o1, o2);
+        operandStack.push(total);
+
+
+    }
+
+    return total.getValue();
   }
 }

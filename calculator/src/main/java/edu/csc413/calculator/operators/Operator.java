@@ -42,7 +42,8 @@ public abstract class Operator {
      */
     public static boolean check( String token ) {
 
-        if (token == "+" || token == "-" || token == "*" || token == "/" || token == "^")
+        if (token.equals("+") || token.equals("-") || token.equals("*") ||
+                token.equals("/") || token.equals("^"))
         {
             return true;
         }

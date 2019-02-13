@@ -86,22 +86,23 @@ public class Evaluator {
     // then executes the while loop.
 
     Operand o1;
-    Operand o2;
     Operand total = new Operand(0);
 //    Operator optr = new Operator();   Can't init this here, template
 
+    //Continue working the until both stacks are empty
     while( !operatorStack.isEmpty() && !operandStack.isEmpty())
     {
-        o2 = operandStack.pop();
         o1 = operandStack.pop();
-        Operator optr = operatorStack.pop();
 
-        total = optr.execute(o1, o2);
+        //Updating total with the executed operator/operands
+        //Needed the extra o1 object to temp store for reading right to left
+        total = operatorStack.pop().execute(operandStack.pop(), o1);
         operandStack.push(total);
 
 
     }
 
+    //Returning the final value after eval the entire expression
     return total.getValue();
   }
 }

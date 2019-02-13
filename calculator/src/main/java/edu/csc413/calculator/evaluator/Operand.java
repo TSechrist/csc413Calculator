@@ -48,7 +48,8 @@ public class Operand {
   public static boolean check( String token ) {
 
       //I hate using this try/catch block to test if the token
-      //is valid but it is the easiest way I could think of
+      //is valid but it is the easiest way I could think of.
+      //Found this on stackoverflow
       try
       {
           int validInt = Integer.parseInt(token);

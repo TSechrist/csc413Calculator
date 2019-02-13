@@ -11,7 +11,7 @@ public class Evaluator {
   private Stack<Operand> operandStack;
   private Stack<Operator> operatorStack;
   private StringTokenizer tokenizer;
-  private static final String DELIMITERS = "+-*^/";
+  private static final String DELIMITERS = "+-*^/()";
 
   public Evaluator() {
     operandStack = new Stack<>();
@@ -36,38 +36,54 @@ public class Evaluator {
       // filter out spaces
       if ( !( token = this.tokenizer.nextToken() ).equals( " " )) {
         // check if token is an operand
+        System.out.println(token);
         if ( Operand.check( token )) {
 //          System.out.println(token + " passed operand check");
           operandStack.push( new Operand( token ));
         } else {
 //          System.out.println(token + " Failed operand check");
-          if ( ! Operator.check( token )) {
-//            System.out.println(token + " Failed operator check");
-            System.out.println( "*****invalid token******" );
-            throw new RuntimeException("*****invalid token******");
-          }
+            if ( ! Operator.check( token )) {
+  //            System.out.println(token + " Failed operator check");
+              System.out.println( "*****invalid token******" );
+              throw new RuntimeException("*****invalid token******");
+            }
+            else if (token.equals(")"))
+            {
+              while ( !operatorStack.peek().equals(Operator.getOperator("(")) )
+              {
+                Operand o2 = operandStack.pop();
+                operandStack.push(operatorStack.pop().execute(operandStack.pop(), o2));
+              }
+              operatorStack.pop();
+            }
+            else
+              {
 
 
-          // TODO Operator is abstract - these two lines will need to be fixed:
-          // The Operator class should contain an instance of a HashMap,
-          // and values will be instances of the Operators.  See Operator class
-          // skeleton for an example.
+              // TODO Operator is abstract - these two lines will need to be fixed:
+              // The Operator class should contain an instance of a HashMap,
+              // and values will be instances of the Operators.  See Operator class
+              // skeleton for an example.
 
-          //Operator newOperator = new Operator();
+              //Operator newOperator = new Operator();
 
-          Operator newOperator =  Operator.getOperator(token);
+              Operator newOperator = Operator.getOperator(token);
 
-          while ( !operatorStack.isEmpty() && operatorStack.peek().priority() >= newOperator.priority() ) {
-            // note that when we eval the expression 1 - 2 we will
-            // push the 1 then the 2 and then do the subtraction operation
-            // This means that the first number to be popped is the
-            // second operand, not the first operand - see the following code
-            Operator oldOpr = operatorStack.pop();
-            Operand op2 = operandStack.pop();
-            Operand op1 = operandStack.pop();
-            operandStack.push( oldOpr.execute( op1, op2 ));
-          }
-          operatorStack.push( newOperator );
+              if( !token.equals("(")) {
+                while (!operatorStack.isEmpty() && operatorStack.peek().priority() >= newOperator.priority()) {
+                  // note that when we eval the expression 1 - 2 we will
+                  // push the 1 then the 2 and then do the subtraction operation
+                  // This means that the first number to be popped is the
+                  // second operand, not the first operand - see the following code
+                  Operator oldOpr = operatorStack.pop();
+                  Operand op2 = operandStack.pop();
+                  Operand op1 = operandStack.pop();
+                  operandStack.push(oldOpr.execute(op1, op2));
+                }
+              }
+
+              operatorStack.push(newOperator);
+            }
         }
       }
     }
@@ -84,24 +100,20 @@ public class Evaluator {
     // Suggestion: create a method that takes an operator as argument and
     // then executes the while loop.
 
-    Operand o1;
-    Operand total = new Operand(0);
-//    Operator optr = new Operator();   Can't init this here, template
+    Operand o2;
 
     //Continue working the until both stacks are empty
     while( !operatorStack.isEmpty() && !operandStack.isEmpty())
     {
-        o1 = operandStack.pop();
 
-        //Updating total with the executed operator/operands
-        //Needed the extra o1 object to temp store for reading right to left
-        total = operatorStack.pop().execute(operandStack.pop(), o1);
-        operandStack.push(total);
-
+      //Updating total with the executed operator/operands
+      //Needed the extra o2 object to temp store for reading right to left
+        o2 = operandStack.pop();
+        operandStack.push(operatorStack.pop().execute(operandStack.pop(), o2));
 
     }
 
     //Returning the final value after eval the entire expression
-    return total.getValue();
+    return operandStack.pop().getValue();
   }
 }

@@ -27,6 +27,8 @@ public abstract class Operator {
         operators.put("*", new MultiplyOperator());
         operators.put("/", new DivideOperator());
         operators.put("^", new PowerOperator());
+        operators.put("(", new ParenOperator());
+        operators.put(")", new ParenOperator());
     }
 
 
@@ -43,7 +45,8 @@ public abstract class Operator {
     public static boolean check( String token ) {
 
         if (token.equals("+") || token.equals("-") || token.equals("*") ||
-                token.equals("/") || token.equals("^"))
+                token.equals("/") || token.equals("^") || token.equals("(") ||
+                token.equals(")"))
         {
             return true;
         }
